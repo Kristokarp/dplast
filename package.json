@@ -1,0 +1,88 @@
+{
+  "name": "dplast",
+  "version": "1.0.0",
+  "description": "oceanhack team dplast",
+  "main": "src/entry/index.js",
+  "files": [
+    "src/",
+    "bin/"
+  ],
+  "engines": {
+    "node": ">=8.9.4",
+    "npm": ">=6.4.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "7.5.5",
+    "@pipedrive/pipedrive-postcss": "^3.0.0",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-add-module-exports": "1.0.2",
+    "babel-plugin-istanbul": "5.2.0",
+    "babel-polyfill": "6.26.0",
+    "css-loader": "^3.1.0",
+    "eslint": "5.16.0",
+    "eslint-config-pipedrive": "4.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-class-property": "1.1.0",
+    "eslint-plugin-react": "7.14.3",
+    "extract-text-webpack-plugin": "4.0.0-beta.0",
+    "file-loader": "4.1.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "0.8.0",
+    "node-sass": "4.12.0",
+    "postcss-loader": "3.0.0",
+    "prettier": "1.18.2",
+    "prop-types": "^15.7.2",
+    "sass-loader": "7.1.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "2.1.0",
+    "webpack": "^4.38.0",
+    "webpack-cleanup-plugin": "0.5.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "4.2.1"
+  },
+  "dependencies": {
+    "leaflet": "^1.6.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "5.0.1"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.config.dev.js --open ",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.production.js",
+    "format-staged": "./bin/format-staged.sh"
+  },
+  "author": "team dplast",
+  "license": "",
+  "node-hooks": {
+    "preset": "es8",
+    "preserve-files": [
+      ".eslintrc.json",
+      ".eslintignore",
+      ".editorconfig"
+    ],
+    "preserve-hooks": [
+      "pre-commit"
+    ]
+  },
+  "keywords": [
+    "react"
+  ],
+  "repository": {
+    "type": "git"
+  },
+  "pre-commit": [
+    "format-staged",
+    "npm-version-check"
+  ],
+  "pre-push": [],
+  "post-merge": []
+}

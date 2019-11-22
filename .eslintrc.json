@@ -1,0 +1,52 @@
+{
+	"root": true,
+	"extends": "pipedrive/es9",
+	"env": {
+		"es6": true,
+		"browser": true,
+		"jest": true,
+		"jquery": true
+	},
+	"rules": {
+		"quotes": [
+			"error",
+			"single",
+			{
+				"allowTemplateLiterals": true,
+				"avoidEscape": true
+			}
+		],
+		"react/jsx-uses-react": "error",
+		"react/jsx-uses-vars": "error",
+		"react/prop-types": 2,
+		"comma-dangle": ["error", "always-multiline"],
+		"max-len": [
+			"error",
+			{
+				"code": 120,
+				"tabWidth": 4,
+				"ignoreStrings": true
+			}
+		],
+		"callback-return": ["warn", ["callback", "cb"]],
+		"space-before-function-paren": [
+			"error",
+			{
+				"anonymous": "never",
+				"named": "never",
+				"asyncArrow": "always"
+			}
+		],
+		"padding-line-between-statements": "off"
+	},
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaVersion": 8,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true,
+			"experimentalObjectRestSpread": true
+		}
+	},
+	"plugins": ["babel", "react"]
+}

@@ -24,7 +24,7 @@ function Map() {
 	time = times[0];
 
 	useEffect(() => {
-		map = L.map('map').setView([58.488, 4.8633], 7);
+		map = L.map('map').setView([58.488, 23.8633], 7);
 		layerGroup = L.layerGroup().addTo(map);
 		// map.scrollWheelZoom.disable();
 		map.setMaxBounds([[-90, -180], [90, 180]]);

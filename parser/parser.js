@@ -1,18 +1,11 @@
 const { readFileSync, writeFileSync } = require('fs');
 
-const getVariable = (content, variable) => {
-	return content
-		.match(new RegExp(`${variable}(.|\n)*?;`, 'gm'))
-		.pop()
-		.replace(/( |=|;|\n|\t|\\)/g, '')
-		.replace(variable, '')
-		.split(',');
-};
 const main = path => {
 	const content = readFileSync(path, 'utf8');
-	const times = getVariable(content, 'time');
-	const lat = getVariable(content, 'lat');
-	const lng = getVariable(content, 'lon');
+	const [t, ln, la] = content.split(';');
+	const times = t.split(',');
+	const lat = la.split(',');
+	const lng = ln.split(',');
 
 	const timesCount = times.length;
 

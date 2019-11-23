@@ -2,5 +2,6 @@ node_modules
 dist
 node_modules
 build
-server/payload.txt
-server/output.json
+parser/payload.txt
+parser/output.json
+.DS_Store

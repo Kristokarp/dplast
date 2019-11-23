@@ -13,23 +13,55 @@ const main = path => {
 	const times = getVariable(content, 'time');
 	const lat = getVariable(content, 'lat');
 	const lng = getVariable(content, 'lon');
-	const mod = times.length;
+
+	const timesCount = times.length;
+
 	const data = {};
 
-	times.map((tr, index) => {
-		const ring = index * mod;
-		data[tr] = [];
-		for (let x = 1; x <= mod; x++) {
-			const id = ring + x - 1;
-			data[tr].push({
-				id: id,
-				lat: lat[id],
-				lng: lng[id],
-			});
-		}
-	});
+	const points = {};
 
-	writeFileSync('output.json', JSON.stringify(data));
+	let i;
+	let lats;
+	let lngs;
+
+	let counter = 0;
+	for (i = 0; i < lat.length; i += timesCount) {
+		lats = lat.slice(i, i + timesCount);
+		lngs = lng.slice(i, i + timesCount);
+
+		points[counter] = { lats, lngs };
+
+		counter += 1;
+	}
+
+	for (let j = 0; j < timesCount; j++) {
+		const time = times[j];
+
+		data[time] = [];
+		for (let i = 0; i < counter; i++) {
+			const { lats, lngs } = points[i];
+			if (lats[j] !== '_' && lngs[j] !== '_') {
+				data[time].push({ lat: lats[j], lng: lngs[j] });
+			}
+		}
+	}
+
+	// const data = {};
+
+	// times.map((tr, index) => {
+	// 	const ring = index * mod;
+	// 	data[tr] = [];
+	// 	for (let x = 1; x <= mod; x++) {
+	// 		const id = ring + x - 1;
+	// 		data[tr].push({
+	// 			id: id,
+	// 			lat: lat[id],
+	// 			lng: lng[id],
+	// 		});
+	// 	}
+	// });
+
+	writeFileSync('plastic.json', JSON.stringify(data));
 };
 
-main('./payload.txt');
+main('./rawdata/ncdumped_2.txt');

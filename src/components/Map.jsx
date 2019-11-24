@@ -48,8 +48,8 @@ function Map() {
 					alt=""
 					style={{
 						position: 'fixed',
-						top: '120px',
-						left: '900px',
+						top: '137px',
+						left: '843px',
 						height: '136px',
 					}}
 				/>

@@ -46,6 +46,7 @@ export function First({ title, index, currentVisibility, setCurrentVisibility })
 	return (
 		<div className="mapFilter" data-visible={currentVisibility === index}>
 			<span>{title}</span>
+			<h2>{title}</h2>
 			<div className="card-wrapper">
 				<SourceCard title="SHIP" icon={ship} iconHover={shipHover} />
 				<SourceCard title="OIL" icon={oil} iconHover={oilHover} />
@@ -70,8 +71,11 @@ export function First({ title, index, currentVisibility, setCurrentVisibility })
 export function Second({ title, index, currentVisibility, setCurrentVisibility }) {
 	return (
 		<div className="mapFilter" data-visible={currentVisibility === index}>
-			<span>{title}</span>
-
+			<span>
+				<div className="circle"></div>
+				{title}
+			</span>
+			<h2>{title}</h2>
 			<InputField label="Type" value="Ferry" />
 			<InputField label="Height" value="15" />
 			<InputField label="Weight" value="100" />
@@ -91,8 +95,11 @@ export function Second({ title, index, currentVisibility, setCurrentVisibility }
 export function Third({ title, index, currentVisibility, setStart, setCurrentVisibility }) {
 	return (
 		<div className="mapFilter" data-visible={currentVisibility === index}>
-			<span>{title}</span>
-
+			<span>
+				<div className="circle red"></div>
+				{title}
+			</span>
+			<h2>{title}</h2>
 			<InputField label="Approximate amount of items" value="1000" />
 			<InputField label="One item weight, gram" value="30" />
 			<InputField label="Type" value="Plastic" />

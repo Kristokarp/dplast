@@ -27,6 +27,7 @@ $grey: #484846;
 	.slider,
 	label,
 	input,
+	h2,
 	button {
 		display: none;
 		visibility: hidden;
@@ -90,6 +91,8 @@ $grey: #484846;
 	padding: 16px 0px;
 	cursor: pointer;
 	color: $grey;
+	background-color: $blue;
+	color: #fff;
 	&:hover {
 		background-color: $blue;
 		color: #fff;
@@ -110,10 +113,6 @@ $grey: #484846;
 		padding: 16px 0px;
 		cursor: pointer;
 		color: $grey;
-		&:hover {
-			background-color: $blue;
-			color: #fff;
-		}
 	}
 }
 .slider {
@@ -160,4 +159,18 @@ input[type='range']:focus::-webkit-slider-runnable-track {
 	100% {
 		visibility: visible;
 	}
+}
+.circle {
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+	border-radius: 9px;
+	background-color: $blue;
+	margin-right: 8px;
+}
+.red {
+	background-color: red;
+}
+h2 {
+	text-align: left;
 }

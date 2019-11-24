@@ -43,6 +43,16 @@ export function displayPoints(seconds, simulation, layerGroup, map) {
 	seconds = seconds + diff;
 
 	addPointsToLayer(seconds, layerGroup, map);
+	if (seconds >= maxShip) {
+		const polygonPoints = [
+			[58.99601857417478, 22.6153564453125],
+			[58.99601857417478, 22.760238647460938],
+			[59.08820785301446, 22.760238647460938],
+			[59.08820785301446, 22.6153564453125],
+			[58.99601857417478, 22.6153564453125],
+		];
+		L.polygon(polygonPoints, { color: 'red' }).addTo(layerGroup);
+	}
 
 	return seconds;
 }

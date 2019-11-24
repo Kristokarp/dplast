@@ -13,9 +13,7 @@ import trashHover from '../images/white_trash.svg';
 
 export default function AccordianManager({ setStart }) {
 	const [currentVisibility, setCurrentVisibility] = useState(1);
-	useEffect(() => {
-		console.log(currentVisibility);
-	}, [currentVisibility]);
+
 	return (
 		<>
 			<First
@@ -64,7 +62,7 @@ export function First({ title, index, currentVisibility, setCurrentVisibility })
 			>
 				Next
 			</button>
-			<Slider />
+			{/* <Slider /> */}
 		</div>
 	);
 }

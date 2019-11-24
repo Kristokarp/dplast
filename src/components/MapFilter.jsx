@@ -53,8 +53,8 @@ export function First({ title, index, currentVisibility, setCurrentVisibility })
 				<SourceCard title="TRASH" icon={trash} iconHover={trashHover} />
 			</div>
 
-			<InputField label="Last Coordinates" />
-			<InputField label="Dates" type="date" value="aaaa" />
+			<InputField label="Last Coordinates" value="58.488, 23.8633" />
+			<InputField label="Dates" type="date" value="aaaa" value="2019-11-01" />
 			<button
 				type="button"
 				className="tracking"
@@ -72,7 +72,7 @@ export function Second({ title, index, currentVisibility, setCurrentVisibility }
 	return (
 		<div className="mapFilter" data-visible={currentVisibility === index}>
 			<span>
-				<div className="circle"></div>
+				<div className="circle red"></div>
 				{title}
 			</span>
 			<h2>{title}</h2>
@@ -96,7 +96,7 @@ export function Third({ title, index, currentVisibility, setStart, setCurrentVis
 	return (
 		<div className="mapFilter" data-visible={currentVisibility === index}>
 			<span>
-				<div className="circle red"></div>
+				<div className="circle"></div>
 				{title}
 			</span>
 			<h2>{title}</h2>
@@ -109,7 +109,7 @@ export function Third({ title, index, currentVisibility, setStart, setCurrentVis
 				className="tracking"
 				onClick={() => {
 					setStart(true);
-					setCurrentVisibility(1);
+					setCurrentVisibility(5);
 				}}
 			>
 				Start

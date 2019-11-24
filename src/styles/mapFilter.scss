@@ -2,6 +2,10 @@ $blue: #0079fe;
 $grey: #484846;
 
 .mapFilter {
+	margin-top: 8px;
+	animation: 1s fadeIn;
+	animation-fill-mode: forwards;
+	cursor: pointer;
 	width: 360px;
 	background-color: #f4f4f4;
 	padding: 24px 16px;
@@ -10,6 +14,26 @@ $grey: #484846;
 	top: 100px;
 	border-radius: 5px;
 	left: 100px;
+	span {
+		font-size: 24px;
+		display: none;
+	}
+}
+[data-visible='false'] {
+	height: 35px;
+	overflow: hidden;
+	.card-wrapper,
+	.media-button,
+	.slider,
+	label,
+	input,
+	button {
+		display: none;
+		visibility: hidden;
+	}
+	span {
+		display: inline;
+	}
 }
 .card-wrapper {
 	margin-bottom: 40px;
@@ -64,5 +88,71 @@ $grey: #484846;
 	&:hover {
 		background-color: $blue;
 		color: #fff;
+	}
+}
+.media-button {
+	margin-top: 24px;
+	button {
+		border: 2px solid $blue;
+		cursor: pointer;
+		font-size: 24px;
+		width: 45%;
+		margin-right: 5%;
+		border: 2px solid $blue;
+		text-align: center;
+		font-size: 24px;
+		border-radius: 4px;
+		padding: 16px 0px;
+		cursor: pointer;
+		color: $grey;
+		&:hover {
+			background-color: $blue;
+			color: #fff;
+		}
+	}
+}
+.slider {
+	position: fixed;
+	bottom: 20px;
+	width: 80vw;
+}
+input[type='range'] {
+	-webkit-appearance: none;
+	margin: 60px 0;
+	width: 100%;
+}
+input[type='range']:focus {
+	outline: none;
+}
+input[type='range']::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 17px;
+	cursor: pointer;
+	animate: 0.2s;
+	box-shadow: 1px 1px 1px #000000;
+	background: #3071a9;
+	border-radius: 5px;
+	border: 1px solid #000000;
+}
+input[type='range']::-webkit-slider-thumb {
+	box-shadow: 1px 1px 1px #000000;
+	border: 1px solid #000000;
+	height: 30px;
+	width: 15px;
+	border-radius: 5px;
+	background: #ffffff;
+	cursor: pointer;
+	-webkit-appearance: none;
+	margin-top: -7.5px;
+}
+input[type='range']:focus::-webkit-slider-runnable-track {
+	background: #3071a9;
+}
+@keyframes fadeIn {
+	99% {
+		visibility: hidden;
+	}
+	100% {
+		visibility: visible;
 	}
 }

@@ -45,11 +45,11 @@ function Map() {
 			return [...prev, ...coordinates];
 		}, []);
 		renderMap({ coordinates });
-	}, [date, sources]);
+	}, [date]);
 
 	return (
 		<>
-			<MapFilter sources={sources} setSource={setSource} setDate={setDate} />
+			<MapFilter sources={sources} setSource={setSource} date={date} setDate={setDate} />
 			<div id="map"></div>;
 		</>
 	);

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import '../styles/mapFilter.scss';
 
-export default function AccordianManager({ sources, setSource, date, setDate }) {
+export default function AccordianManager({ setStart }) {
 	const [currentVisibility, setCurrentVisibility] = useState(1);
 	useEffect(() => {
 		console.log(currentVisibility);
@@ -15,10 +15,6 @@ export default function AccordianManager({ sources, setSource, date, setDate }) 
 				currentVisibility={currentVisibility}
 				setCurrentVisibility={setCurrentVisibility}
 				index={1}
-				sources={sources}
-				setSource={setSource}
-				date={date}
-				setDate={setDate}
 			/>
 
 			<Second
@@ -26,10 +22,6 @@ export default function AccordianManager({ sources, setSource, date, setDate }) 
 				currentVisibility={currentVisibility}
 				setCurrentVisibility={setCurrentVisibility}
 				index={2}
-				sources={sources}
-				setSource={setSource}
-				date={date}
-				setDate={setDate}
 			/>
 
 			<Third
@@ -37,31 +29,23 @@ export default function AccordianManager({ sources, setSource, date, setDate }) 
 				currentVisibility={currentVisibility}
 				setCurrentVisibility={setCurrentVisibility}
 				index={3}
-				sources={sources}
-				setSource={setSource}
-				date={date}
-				setDate={setDate}
+				setStart={setStart}
 			/>
 		</>
 	);
 }
-export function First({ title, sources, setSource, date, setDate, index, currentVisibility, setCurrentVisibility }) {
+export function First({ title, index, currentVisibility, setCurrentVisibility }) {
 	return (
 		<div className="mapFilter" data-visible={currentVisibility === index}>
 			<span>{title}</span>
 			<div className="card-wrapper">
-				<SourceCard title="Plastic" sources={sources} changeHandler={setSource} />
-				<SourceCard title="Oil" sources={sources} changeHandler={setSource} />
-				<SourceCard title="Trash" sources={sources} changeHandler={setSource} />
+				<SourceCard title="Plastic" />
+				<SourceCard title="Oil" />
+				<SourceCard title="Trash" />
 			</div>
 
 			<InputField label="Last Coordinates" />
-			<InputField
-				label="Dates"
-				type="date"
-				value={`${date.year}-${date.month}-${date.day}`}
-				changeHandler={setDate}
-			/>
+			<InputField label="Dates" type="date" value="aaaa" />
 			<button
 				type="button"
 				className="tracking"
@@ -71,7 +55,6 @@ export function First({ title, sources, setSource, date, setDate, index, current
 			>
 				Next
 			</button>
-			<MediaButtons date={date} setDate={setDate} />
 			<Slider />
 		</div>
 	);
@@ -97,8 +80,7 @@ export function Second({ title, index, currentVisibility, setCurrentVisibility }
 		</div>
 	);
 }
-export function Third({ title, index, currentVisibility, setDate, setCurrentVisibility }) {
-	const [loop, setLoop] = useState(false);
+export function Third({ title, index, currentVisibility, setStart, setCurrentVisibility }) {
 	return (
 		<div className="mapFilter" data-visible={currentVisibility === index}>
 			<span>{title}</span>
@@ -111,10 +93,7 @@ export function Third({ title, index, currentVisibility, setDate, setCurrentVisi
 				type="button"
 				className="tracking"
 				onClick={() => {
-					const data = setInterval(() => {
-						animate({ setDate });
-					}, 500);
-					setLoop(data);
+					setStart(true);
 					setCurrentVisibility(1);
 				}}
 			>
@@ -124,25 +103,6 @@ export function Third({ title, index, currentVisibility, setDate, setCurrentVisi
 	);
 }
 
-function animate({ setDate }) {
-	setDate(prev => {
-		const day = prev.day || 1;
-
-		const max = 21;
-		if (day > max) {
-			return prev;
-		}
-		return { ...prev, day: day + 1 };
-	});
-}
-function MediaButtons({ setDate }) {
-	return (
-		<div className="media-button">
-			<button onClick={() => {}}>Play</button>
-			<button onClick={() => {}}>Pause</button>
-		</div>
-	);
-}
 function Slider() {
 	return (
 		<div className="slider">
@@ -150,45 +110,24 @@ function Slider() {
 		</div>
 	);
 }
-function SourceCard({ sources, changeHandler, title }) {
-	const key = title.toLowerCase();
-	const value = sources[key];
+function SourceCard({ title }) {
+	let enabled = false;
 	return (
 		<div
 			className="sourceCard"
-			data-selected={value}
 			onClick={() => {
-				changeHandler(prev => {
-					return {
-						...prev,
-						[key]: !prev[key],
-					};
-				});
+				enabled = !enabled;
 			}}
 		>
 			{title}
 		</div>
 	);
 }
-function InputField({ label, changeHandler, value = '', type = 'text' }) {
-	const handler = changeHandler ? changeHandler : () => {};
+function InputField({ label, value = '', type = 'text' }) {
 	return (
 		<div className="inputField">
 			<label htmlFor="">{label}</label>
-			<input
-				value={value}
-				type={type}
-				onChange={e => {
-					const { value } = e.target;
-					const [year, month, day] = value.split('-');
-					handler({
-						day: parseInt(day, 10),
-						month: parseInt(month, 10),
-						year: parseInt(year, 10),
-						date: value,
-					});
-				}}
-			/>
+			<input defaultValue={value} type={type} />
 		</div>
 	);
 }

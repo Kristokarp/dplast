@@ -1,27 +1,48 @@
-import { secondsToTime } from 'utils/time';
+import L from 'leaflet';
+
+let plastic;
+let ship;
+const diff = 3600;
+const startSeconds = 1572566400;
+const maxSeconds = 1574316000;
+const maxShip = 1572850800;
 
 export function getData(file) {
-	const source = require(`../../parser/${file}.json`);
+	const source = require(`../data/${file}.json`);
 	const data = source;
-	Object.keys(data).map(key => {
-		const date = secondsToTime(key)
-			.split(' ')
-			.shift();
-		const [year, month, day] = date.split('-');
-		source[key] = source[key].map(datum => {
-			datum.month = parseInt(month, 10);
-			datum.day = parseInt(day, 10);
-			datum.year = parseInt(year, 10);
-			datum.date = date;
-			return datum;
-		});
-	});
 	return data;
 }
 export function init() {
-	return {
-		plastic: getData('plastic'),
-		oil: getData('oil'),
-		trash: getData('trash'),
-	};
+	plastic = getData('plastic');
+	ship = getData('ship');
+}
+
+export function addPointsToLayer(seconds, layerGroup) {
+	plastic[seconds].forEach(latlng => {
+		new L.circleMarker(latlng, { radius: 3, fillOpacity: 1 }).addTo(layerGroup);
+	});
+
+	const shipseconds = seconds > maxShip ? maxShip : seconds;
+
+	ship[shipseconds].forEach(latlng => {
+		new L.circleMarker(latlng, { radius: 3, fillOpacity: 1, color: '#ff0000' }).addTo(layerGroup);
+	});
+}
+
+export function displayPoints(seconds, simulation, layerGroup, map) {
+	if (!seconds) {
+		seconds = startSeconds;
+	}
+
+	if (seconds === maxSeconds) {
+		simulation.clearInterval();
+		return seconds;
+	}
+
+	layerGroup.clearLayers();
+	seconds = seconds + diff;
+
+	addPointsToLayer(seconds, layerGroup, map);
+
+	return seconds;
 }

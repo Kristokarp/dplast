@@ -10,7 +10,7 @@ const mapConfig = {
 
 export function init() {
 	// create map
-	map = L.map('map').setView([58.488, 23.8633], 7);
+	map = L.map('map').setView([58.488, 23.8633], 9);
 	// map.scrollWheelZoom.disable();
 	map.setMaxBounds([[-90, -180], [90, 180]]);
 	map.removeControl(map.zoomControl);
@@ -19,43 +19,6 @@ export function init() {
 		map,
 	);
 	layerGroup = L.layerGroup().addTo(map);
-}
 
-function render({ source, map, layerGroup, fillColor }) {
-	source.map(data => {
-		L.geoJSON(
-			{
-				type: 'Feature',
-				geometry: {
-					type: 'Point',
-					coordinates: [data.lng, data.lat],
-				},
-			},
-			{
-				pointToLayer: function(feature, latLng) {
-					return L.circleMarker(latLng, {
-						radius: map.getZoom() * 1.5,
-						fillColor,
-						color: fillColor,
-						weight: 1,
-						fillOpacity: data.opacity,
-					});
-				},
-			},
-		).addTo(layerGroup);
-	});
-}
-export function renderMap({ coordinates }) {
-	if (!map) {
-		const obj = init();
-		map = obj.map;
-		layerGroup = obj.layerGroup;
-	}
-	layerGroup.clearLayers();
-	render({
-		source: coordinates,
-		map,
-		layerGroup,
-		fillColor: '#ff7800',
-	});
+	return [map, layerGroup];
 }

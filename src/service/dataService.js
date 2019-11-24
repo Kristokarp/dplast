@@ -35,7 +35,7 @@ export function displayPoints(seconds, simulation, layerGroup, map) {
 	}
 
 	if (seconds === maxSeconds) {
-		simulation.clearInterval();
+		clearInterval(simulation);
 		return seconds;
 	}
 

@@ -2,6 +2,14 @@
 import React, { useState, useEffect } from 'react';
 
 import '../styles/mapFilter.scss';
+import ship from '../images/black_ship.svg';
+import shipHover from '../images/white_ship.svg';
+
+import oil from '../images/black_oil.svg';
+import oilHover from '../images/white_oil.svg';
+
+import trash from '../images/black_trash.svg';
+import trashHover from '../images/white_trash.svg';
 
 export default function AccordianManager({ setStart }) {
 	const [currentVisibility, setCurrentVisibility] = useState(1);
@@ -39,9 +47,9 @@ export function First({ title, index, currentVisibility, setCurrentVisibility })
 		<div className="mapFilter" data-visible={currentVisibility === index}>
 			<span>{title}</span>
 			<div className="card-wrapper">
-				<SourceCard title="Plastic" />
-				<SourceCard title="Oil" />
-				<SourceCard title="Trash" />
+				<SourceCard title="SHIP" icon={ship} iconHover={shipHover} />
+				<SourceCard title="OIL" icon={oil} iconHover={oilHover} />
+				<SourceCard title="TRASH" icon={trash} iconHover={trashHover} />
 			</div>
 
 			<InputField label="Last Coordinates" />
@@ -110,15 +118,37 @@ function Slider() {
 		</div>
 	);
 }
-function SourceCard({ title }) {
-	let enabled = false;
+function SourceCard({ title, icon, iconHover }) {
+	const [selected, setSelected] = useState(false);
+	const [image, setImage] = useState(icon);
+	useEffect(() => {
+		if (selected) {
+			setImage(iconHover);
+		}
+	}, [selected]);
 	return (
 		<div
 			className="sourceCard"
 			onClick={() => {
-				enabled = !enabled;
+				setSelected(prev => !prev);
 			}}
+			onMouseOver={() => {
+				if (selected) {
+					return;
+				}
+				setImage(iconHover);
+			}}
+			onMouseLeave={() => {
+				if (selected) {
+					return;
+				}
+				setImage(icon);
+			}}
+			data-selected={selected}
 		>
+			<div>
+				<img src={image} alt="" />
+			</div>
 			{title}
 		</div>
 	);

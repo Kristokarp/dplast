@@ -18,8 +18,6 @@ function Map() {
 	useEffect(() => {
 		if (start) {
 			simulation = setInterval(() => {
-				console.log('showing');
-
 				seconds = displayPoints(seconds, simulation, layerGroup, map);
 			}, 100);
 		}

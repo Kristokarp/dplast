@@ -1,63 +1,44 @@
-import React, { useEffect } from 'react';
-import L from 'leaflet';
-const plastic = require('../data/plastic.json');
+import React, { useEffect, useState } from 'react';
 
-let layerGroup;
-let map;
-let diff;
-let simulation;
-let time;
+import { init as dataInit } from '../service/dataService';
+import { init as mapInit, renderMap } from '../service/mapService';
 
-const times = Object.keys(plastic)
-	.map(Number)
-	.sort();
+import MapFilter from './MapFilter';
 
-function addPointsToMap(points) {
-	layerGroup = L.layerGroup().addTo(map);
-	points.forEach(latlng => {
-		new L.circleMarker(latlng, { radius: 3, fillOpacity: 1 }).addTo(layerGroup);
-	});
+function getCoordinates({ data, month, day }) {
+	for (const [key, values] of Object.entries(data)) {
+		const value = values[0];
+		if (value.day === day && value.month === month) {
+			return data[key];
+		}
+	}
 }
 
 function Map() {
-	diff = times[1] - times[0];
-	time = times[0];
-
+	const [monthYear, setMonthYear] = useState({
+		day: 14,
+		month: 11,
+		year: 2019,
+	});
 	useEffect(() => {
-		map = L.map('map').setView([58.488, 23.8633], 7);
-		layerGroup = L.layerGroup().addTo(map);
-		// map.scrollWheelZoom.disable();
-		map.setMaxBounds([[-90, -180], [90, 180]]);
-		map.removeControl(map.zoomControl);
-
-		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-			attribution:
-				'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-			id: 'mapbox.satellite',
-			accessToken:
-				'pk.eyJ1IjoiYmVya2VyZGVtaXJlciIsImEiOiJjazF3aHlxNDQwMXVyM2pwbW5zMjI1Z3BzIn0.m-xrbIqHg-s-hl3lqZcXSw',
-		}).addTo(map);
-
-		addPointsToMap(plastic[time]);
+		mapInit();
 	}, []);
-
 	useEffect(() => {
-		if (time === times[times.length - 1]) {
-			simulation.clearInterval();
-		} else {
-			simulation = setInterval(() => {
-				layerGroup.clearLayers();
-				if (time === times[times.length - 1]) {
-					time = times[0];
-				}
-
-				time = time + diff;
-				addPointsToMap(plastic[time]);
-			}, 100);
+		if (!monthYear.month) {
+			return;
 		}
-	}, []);
+		const { month, day } = monthYear;
+		const { plastic } = dataInit();
+		const coordinates = getCoordinates({ data: plastic, month, day }) || [];
+		renderMap({ coordinates });
+	}, [monthYear]);
 
-	return <div id="map"></div>;
+	return (
+		<>
+			<MapFilter monthYear={monthYear} setMonthYear={setMonthYear} />
+			<div id="map"></div>;
+		</>
+	);
 }
 
 export default Map;

@@ -1,0 +1,67 @@
+$blue: #0079fe;
+$grey: #484846;
+
+.mapFilter {
+	width: 360px;
+	background-color: #f4f4f4;
+	padding: 24px 16px;
+	position: relative;
+	z-index: 10;
+	top: 100px;
+	border-radius: 5px;
+	left: 100px;
+}
+.card-wrapper {
+	margin-bottom: 40px;
+	&::after {
+		content: ' ';
+		display: block;
+		height: 0;
+		clear: both;
+	}
+}
+.sourceCard {
+	float: left;
+	margin-left: 16px;
+	height: 75px;
+	width: 75px;
+	padding: 10px;
+	text-align: center;
+	border-radius: 5px;
+	background-color: $blue;
+	font-size: 30px;
+	cursor: pointer;
+	&:hover {
+		background-color: #fff;
+		color: $grey;
+	}
+}
+.inputField {
+	label,
+	input {
+		display: block;
+	}
+	input {
+		font-size: 24px;
+		margin: 16px 0px;
+		width: 95%;
+		height: 30px;
+		padding: 10px 5px;
+		border-radius: 4px;
+		border: 1px solid #e0e0e0;
+	}
+}
+.tracking {
+	border: 2px solid $blue;
+	text-align: center;
+	font-size: 24px;
+	width: 95%;
+	border-radius: 4px;
+	padding: 16px 0px;
+	cursor: pointer;
+	color: $grey;
+	&:hover {
+		background-color: $blue;
+		color: #fff;
+	}
+}

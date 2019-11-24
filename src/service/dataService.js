@@ -21,5 +21,7 @@ export function getData(file) {
 export function init() {
 	return {
 		plastic: getData('plastic'),
+		oil: getData('oil'),
+		trash: getData('trash'),
 	};
 }

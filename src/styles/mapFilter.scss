@@ -30,8 +30,9 @@ $grey: #484846;
 	border-radius: 5px;
 	background-color: $blue;
 	font-size: 30px;
+	border: 1px solid #e0e0e0;
 	cursor: pointer;
-	&:hover {
+	&[data-selected='true'] {
 		background-color: #fff;
 		color: $grey;
 	}

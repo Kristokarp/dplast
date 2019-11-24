@@ -4,6 +4,7 @@ import { init as dataInit } from '../service/dataService';
 import { init as mapInit, renderMap } from '../service/mapService';
 
 import MapFilter from './MapFilter';
+let sourceData = {};
 
 function getCoordinates({ data, month, day }) {
 	for (const [key, values] of Object.entries(data)) {
@@ -15,27 +16,40 @@ function getCoordinates({ data, month, day }) {
 }
 
 function Map() {
-	const [monthYear, setMonthYear] = useState({
-		day: 14,
-		month: 11,
-		year: 2019,
+	const [date, setDate] = useState({
+		// day: 14,
+		// month: 11,
+		// year: 2019,
+		// date: '2019-11-14',
+	});
+	const [sources, setSource] = useState({
+		plastic: false,
+		oil: false,
+		trash: false,
 	});
 	useEffect(() => {
 		mapInit();
+		sourceData = dataInit();
 	}, []);
 	useEffect(() => {
-		if (!monthYear.month) {
+		if (!date.month) {
 			return;
 		}
-		const { month, day } = monthYear;
-		const { plastic } = dataInit();
-		const coordinates = getCoordinates({ data: plastic, month, day }) || [];
+		const { month, day } = date;
+		const coordinates = Object.keys(sources).reduce((prev, source) => {
+			const value = sources[source];
+			if (!value) {
+				return prev;
+			}
+			const coordinates = getCoordinates({ data: sourceData[source], month, day }) || [];
+			return [...prev, ...coordinates];
+		}, []);
 		renderMap({ coordinates });
-	}, [monthYear]);
+	}, [date, sources]);
 
 	return (
 		<>
-			<MapFilter monthYear={monthYear} setMonthYear={setMonthYear} />
+			<MapFilter sources={sources} setSource={setSource} setDate={setDate} />
 			<div id="map"></div>;
 		</>
 	);
